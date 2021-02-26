@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+
+import Loading from './components/Loading';
+import Error from './components/Error';
+import EndQuiz from './components/EndQuiz';
+import Quiz from './components/Quiz';
+
+import {useGlobalContext} from './context';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+  const {quizData,loading,error,counter,endGame}=useGlobalContext();
+
+
+  if(endGame) return <EndQuiz counter={counter} questionLength={quizData.length}/>
+
+  if(loading) return <Loading/>;
+
+  if(error) return <Error/>;
+  
+  if(!quizData.length) return <Error/>;
+  
+  if(!endGame) return(<Quiz />)
+  
+  }
+
+export default App
